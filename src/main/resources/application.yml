@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: status-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+status:
+  refresh-interval: ${STATUS_REFRESH_INTERVAL:30s}
+  timeout: ${STATUS_TIMEOUT:5s}
+  # Comma-separated list. Only needed for local browser development; empty in production.
+  cors-allowed-origins: ${STATUS_CORS_ALLOWED_ORIGINS:}
+  servers:
+    - id: teamspeak
+      name: TeamSpeak
+      game: teamspeak
+      host: ${STATUS_TEAMSPEAK_HOST:host.docker.internal}
+      port: ${STATUS_TEAMSPEAK_PORT:30033}
+      max-players: 32
+    - id: minecraft
+      name: Minecraft
+      game: minecraft
+      host: ${STATUS_MINECRAFT_HOST:host.docker.internal}
+      port: ${STATUS_MINECRAFT_PORT:25565}
+    - id: palworld
+      name: Palworld
+      game: steam_a2s
+      host: ${STATUS_PALWORLD_HOST:host.docker.internal}
+      port: ${STATUS_PALWORLD_PORT:27015}
+    - id: enshrouded
+      name: Enshrouded
+      game: steam_a2s
+      host: ${STATUS_ENSHROUDED_HOST:host.docker.internal}
+      port: ${STATUS_ENSHROUDED_PORT:15637}
