@@ -8,7 +8,7 @@ pipeline {
   }
 
   environment {
-    TS_QUERY_ADMIN_PASSWORD = credentials('TEAMSPEAK_QUERY_ADMIN_PASSWORD')
+    TS_WEBQUERY_APIKEY = credentials('TEAMSPEAK_WEBQUERY_APIKEY')
   }
 
   stages {

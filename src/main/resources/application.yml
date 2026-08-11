@@ -22,7 +22,7 @@ status:
       game: teamspeak_webquery
       host: ${STATUS_TEAMSPEAK_HOST:teamspeak-server}
       port: ${STATUS_TEAMSPEAK_PORT:10080}
-      password: ${STATUS_TEAMSPEAK_QUERY_PASSWORD:}
+      api-key: ${STATUS_TEAMSPEAK_QUERY_APIKEY:}
       virtual-server-id: ${STATUS_TEAMSPEAK_VIRTUAL_SERVER_ID:1}
       max-players: 32
     - id: minecraft

@@ -42,8 +42,8 @@ public class StatusProperties {
         private int port;
         /** Optional slot count, used as a fallback when the protocol does not report it. */
         private Integer maxPlayers;
-        /** Password for authenticated query protocols (e.g. TeamSpeak WebQuery serveradmin). */
-        private String password;
+        /** API key for authenticated query protocols (TeamSpeak WebQuery x-api-key). */
+        private String apiKey;
         /** Virtual server id for query protocols that address multiple servers (default 1). */
         private Integer virtualServerId;
     }

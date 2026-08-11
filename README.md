@@ -68,7 +68,7 @@ with environment variables.
 | `STATUS_CORS_ALLOWED_ORIGINS` | *(empty)*            | Comma-separated origins; only for local dev. |
 | `STATUS_<GAME>_HOST`          | per game             | Host to reach a given server on.          |
 | `STATUS_<GAME>_PORT`          | per game             | Query port for a given server.            |
-| `STATUS_TEAMSPEAK_QUERY_PASSWORD` | *(empty)*        | serveradmin WebQuery password (from a Jenkins credential). |
+| `STATUS_TEAMSPEAK_QUERY_APIKEY` | *(empty)*          | TeamSpeak WebQuery api key (from a Jenkins credential). |
 
 Minecraft, Palworld and Enshrouded publish their ports on the Docker host, so in
 the container the service reaches them via `host.docker.internal` (mapped to the
@@ -117,35 +117,48 @@ matching card key in the UI if needed.
 ## TeamSpeak WebQuery
 
 TeamSpeak 6 disables all query interfaces by default and no longer offers the
-old raw ServerQuery port (10011). Player counts are read through the HTTP
-WebQuery API instead:
+old raw ServerQuery port (10011). Every WebQuery request requires an
+`x-api-key`; there is no unauthenticated login. Player counts are read like this:
 
-- The TeamSpeak container enables the HTTP WebQuery (`TSSERVER_QUERY_HTTP_ENABLED=true`,
-  port 10080) and sets a fixed `serveradmin` password
-  (`TSSERVER_QUERY_ADMIN_PASSWORD`), both configured in the `teamspeak-server`
-  project.
-- That port is **not** published to the host; the container joins `status-net`
-  so this service can reach it internally at `teamspeak-server:10080`.
-- The same password is passed to this service as `STATUS_TEAMSPEAK_QUERY_PASSWORD`
-  (from the shared `TEAMSPEAK_QUERY_ADMIN_PASSWORD` Jenkins credential).
+- The `teamspeak-server` project enables the HTTP WebQuery
+  (`TSSERVER_QUERY_HTTP_ENABLED=true`, port 10080) and the SSH query
+  (`TSSERVER_QUERY_SSH_ENABLED=true`, port 10022), and sets a fixed `serveradmin`
+  password (`TSSERVER_QUERY_ADMIN_PASSWORD`).
+- Neither port is published to the host; the container joins `status-net` so
+  this service can reach the WebQuery internally at `teamspeak-server:10080`.
+- A persistent api key is created once over the SSH query (see below) and passed
+  to this service as `STATUS_TEAMSPEAK_QUERY_APIKEY` (from the
+  `TEAMSPEAK_WEBQUERY_APIKEY` Jenkins credential).
 
-The `teamspeak_webquery` querier logs in as `serveradmin` to obtain a session
-api key, then calls `serverinfo`. The reported player count is
+The `teamspeak_webquery` querier makes a single `GET /{sid}/serverinfo` request
+with the `x-api-key` header. The reported player count is
 `virtualserver_clientsonline` minus `virtualserver_queryclientsonline`, so query
 connections (including this service's own) are not counted as voice users.
 
-You can verify the WebQuery against a running server from a throwaway container
-on the same network:
+### Creating the api key (one-time)
+
+TeamSpeak 6 can only mint api keys over an authenticated ServerQuery session, so
+connect once via the SSH query and run `apikeyadd`. `serverinfo` needs the
+`manage` scope:
 
 ```bash
-docker run --rm --network status-net curlimages/curl -s \
-  "http://teamspeak-server:10080/login?client_login_name=serveradmin&client_login_password=YOUR_PASSWORD"
+docker run --rm -it --network status-net alpine sh -c \
+  "apk add -q openssh-client && ssh -p 10022 -o StrictHostKeyChecking=no serveradmin@teamspeak-server"
 ```
 
-The response contains an `apikey`; use it to read `serverinfo`:
+At the ServerQuery prompt (log in with the serveradmin password):
+
+```
+use 1
+apikeyadd scope=manage lifetime=0
+quit
+```
+
+Store the returned `apikey` as the `TEAMSPEAK_WEBQUERY_APIKEY` Jenkins
+credential. Verify it against the WebQuery from a throwaway container:
 
 ```bash
 docker run --rm --network status-net curlimages/curl -s \
-  -H "x-api-key: THE_APIKEY" \
-  "http://teamspeak-server:10080/1/serverinfo"
+  -H 'x-api-key: THE_APIKEY' \
+  'http://teamspeak-server:10080/1/serverinfo'
 ```

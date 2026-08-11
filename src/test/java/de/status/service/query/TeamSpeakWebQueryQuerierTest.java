@@ -20,7 +20,7 @@ class TeamSpeakWebQueryQuerierTest {
     }
 
     @Test
-    void returnsOfflineWhenNoPasswordConfigured() {
+    void returnsOfflineWhenNoApiKeyConfigured() {
         ServerConfig server = new ServerConfig();
         server.setGame(GameType.TEAMSPEAK_WEBQUERY);
         server.setHost("teamspeak-server");
@@ -29,6 +29,6 @@ class TeamSpeakWebQueryQuerierTest {
         QueryResult result = querier.query(server, Duration.ofSeconds(1));
 
         assertThat(result.online()).isFalse();
-        assertThat(result.error()).contains("password");
+        assertThat(result.error()).contains("api key");
     }
 }
