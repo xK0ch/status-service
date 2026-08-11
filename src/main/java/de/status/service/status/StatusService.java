@@ -64,6 +64,7 @@ public class StatusService {
                 server.getName(),
                 server.getGame(),
                 result.online(),
+                server.isExpectedOnline(),
                 result.players(),
                 maxPlayers,
                 result.version(),

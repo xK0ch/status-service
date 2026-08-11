@@ -25,18 +25,22 @@ status:
       api-key: ${STATUS_TEAMSPEAK_QUERY_APIKEY:}
       virtual-server-id: ${STATUS_TEAMSPEAK_VIRTUAL_SERVER_ID:1}
       max-players: 32
+      expected-online: ${STATUS_TEAMSPEAK_EXPECTED_ONLINE:true}
     - id: minecraft
       name: Minecraft
       game: minecraft
       host: ${STATUS_MINECRAFT_HOST:host.docker.internal}
       port: ${STATUS_MINECRAFT_PORT:25565}
+      expected-online: ${STATUS_MINECRAFT_EXPECTED_ONLINE:false}
     - id: palworld
       name: Palworld
       game: steam_a2s
       host: ${STATUS_PALWORLD_HOST:host.docker.internal}
       port: ${STATUS_PALWORLD_PORT:27015}
+      expected-online: ${STATUS_PALWORLD_EXPECTED_ONLINE:false}
     - id: enshrouded
       name: Enshrouded
       game: steam_a2s
       host: ${STATUS_ENSHROUDED_HOST:host.docker.internal}
       port: ${STATUS_ENSHROUDED_PORT:15637}
+      expected-online: ${STATUS_ENSHROUDED_EXPECTED_ONLINE:false}

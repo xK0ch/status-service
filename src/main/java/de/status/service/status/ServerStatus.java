@@ -11,6 +11,7 @@ public record ServerStatus(
         String name,
         GameType game,
         boolean online,
+        boolean expectedOnline,
         Integer players,
         Integer maxPlayers,
         String version,

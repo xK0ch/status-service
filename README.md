@@ -68,6 +68,7 @@ with environment variables.
 | `STATUS_CORS_ALLOWED_ORIGINS` | *(empty)*            | Comma-separated origins; only for local dev. |
 | `STATUS_<GAME>_HOST`          | per game             | Host to reach a given server on.          |
 | `STATUS_<GAME>_PORT`          | per game             | Query port for a given server.            |
+| `STATUS_<GAME>_EXPECTED_ONLINE` | per game           | Whether the server is meant to be running (see below). |
 | `STATUS_TEAMSPEAK_QUERY_APIKEY` | *(empty)*          | TeamSpeak WebQuery api key (from a Jenkins credential). |
 
 Minecraft, Palworld and Enshrouded publish their ports on the Docker host, so in
@@ -113,6 +114,20 @@ Add another entry under `status.servers` in `application.yml` (or override via
 env vars) with an `id`, `name`, `game` (`minecraft`, `steam_a2s`,
 `teamspeak_webquery`, `teamspeak` or `tcp`), `host` and `port`. Then add a
 matching card key in the UI if needed.
+
+## Expected-online
+
+Each server has an `expected-online` flag (default `true`). It distinguishes a
+real outage from a server that is intentionally off:
+
+- `expected-online: true` and offline is treated as **down** (a problem): the UI
+  shows it in red with the query error, and the browser tab favicon turns red.
+- `expected-online: false` and offline is shown as **idle** (intentionally off):
+  a calm "not running" note, no error, and no effect on the favicon.
+
+TeamSpeak defaults to `true`; Minecraft, Palworld and Enshrouded default to
+`false`. To bring one back into service, flip its flag, e.g.
+`STATUS_MINECRAFT_EXPECTED_ONLINE=true`.
 
 ## TeamSpeak WebQuery
 

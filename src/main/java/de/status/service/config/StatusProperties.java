@@ -42,6 +42,12 @@ public class StatusProperties {
         private int port;
         /** Optional slot count, used as a fallback when the protocol does not report it. */
         private Integer maxPlayers;
+        /**
+         * Whether this server is meant to be running. When true, being offline is
+         * treated as a problem; when false, the server is shown as intentionally
+         * off and its query errors are not surfaced.
+         */
+        private boolean expectedOnline = true;
         /** API key for authenticated query protocols (TeamSpeak WebQuery x-api-key). */
         private String apiKey;
         /** Virtual server id for query protocols that address multiple servers (default 1). */
