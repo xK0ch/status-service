@@ -11,6 +11,14 @@ management:
       exposure:
         include: health
 
+springdoc:
+  default-produces-media-type: application/json
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+  api-docs:
+    path: /v3/api-docs
+
 status:
   refresh-interval: ${STATUS_REFRESH_INTERVAL:30s}
   timeout: ${STATUS_TIMEOUT:5s}

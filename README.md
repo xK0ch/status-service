@@ -34,6 +34,7 @@ published to the host. Instead the TeamSpeak container joins the internal
 |--------|-----------------------|----------------------------------------------------|
 | GET    | `/api/status`         | Current snapshot of every server as a JSON array.  |
 | GET    | `/api/status/stream`  | SSE stream; pushes the snapshot on connect and after every poll (event name `status`). |
+| GET    | `/swagger-ui/index.html` | Swagger UI for the API.                         |
 | GET    | `/actuator/health`    | Health check.                                      |
 
 Example `ServerStatus`:
