@@ -15,6 +15,9 @@ public enum GameType {
     /** TeamSpeak: TCP liveness check on the file-transfer port. */
     TEAMSPEAK,
 
+    /** TeamSpeak 6 HTTP WebQuery: reports the online client count. */
+    TEAMSPEAK_WEBQUERY,
+
     /** Generic TCP connect check. */
     TCP
 }

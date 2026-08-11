@@ -7,6 +7,10 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '20'))
   }
 
+  environment {
+    TS_QUERY_ADMIN_PASSWORD = credentials('TEAMSPEAK_QUERY_ADMIN_PASSWORD')
+  }
+
   stages {
     stage('Deploy') {
       steps {

@@ -19,9 +19,11 @@ status:
   servers:
     - id: teamspeak
       name: TeamSpeak
-      game: teamspeak
-      host: ${STATUS_TEAMSPEAK_HOST:host.docker.internal}
-      port: ${STATUS_TEAMSPEAK_PORT:30033}
+      game: teamspeak_webquery
+      host: ${STATUS_TEAMSPEAK_HOST:teamspeak-server}
+      port: ${STATUS_TEAMSPEAK_PORT:10080}
+      password: ${STATUS_TEAMSPEAK_QUERY_PASSWORD:}
+      virtual-server-id: ${STATUS_TEAMSPEAK_VIRTUAL_SERVER_ID:1}
       max-players: 32
     - id: minecraft
       name: Minecraft
