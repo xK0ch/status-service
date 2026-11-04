@@ -21,6 +21,7 @@ often than the poll interval, no matter how many people watch the page.
 | Minecraft  | Server List Ping (TCP)          | online/offline, players, version, MOTD, latency |
 | Palworld   | Steam A2S_INFO (UDP)            | online/offline, players, map, latency |
 | Enshrouded | Steam A2S_INFO (UDP)            | online/offline, players, map, latency |
+| Project Zomboid | Steam A2S_INFO (UDP, port 16261) | online/offline, players, map, latency |
 | TeamSpeak  | HTTP WebQuery (port 10080)      | online/offline, players, latency |
 
 TeamSpeak is a special case: its WebQuery is an admin interface, so it is not
@@ -72,7 +73,7 @@ with environment variables.
 | `STATUS_<GAME>_EXPECTED_ONLINE` | per game           | Whether the server is meant to be running (see below). |
 | `STATUS_TEAMSPEAK_QUERY_APIKEY` | *(empty)*          | TeamSpeak WebQuery api key (from a Jenkins credential). |
 
-Minecraft, Palworld and Enshrouded publish their ports on the Docker host, so in
+Minecraft, Palworld, Enshrouded and Project Zomboid publish their ports on the Docker host, so in
 the container the service reaches them via `host.docker.internal` (mapped to the
 host gateway in `docker-compose-status-service.yml`). TeamSpeak is reached over
 the shared `status-net` network by container name (`teamspeak-server`).

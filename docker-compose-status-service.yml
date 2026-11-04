@@ -8,6 +8,7 @@ services:
       STATUS_MINECRAFT_HOST: ${STATUS_MINECRAFT_HOST:-host.docker.internal}
       STATUS_PALWORLD_HOST: ${STATUS_PALWORLD_HOST:-host.docker.internal}
       STATUS_ENSHROUDED_HOST: ${STATUS_ENSHROUDED_HOST:-host.docker.internal}
+      STATUS_PROJECTZOMBOID_HOST: ${STATUS_PROJECTZOMBOID_HOST:-host.docker.internal}
       # TeamSpeak is reached over the shared status-net by container name; the
       # WebQuery api key is injected from a Jenkins credential.
       STATUS_TEAMSPEAK_HOST: ${STATUS_TEAMSPEAK_HOST:-teamspeak-server}
