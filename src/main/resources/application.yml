@@ -39,7 +39,7 @@ status:
       game: steam_a2s
       host: ${STATUS_PROJECTZOMBOID_HOST:host.docker.internal}
       port: ${STATUS_PROJECTZOMBOID_PORT:16261}
-      expected-online: ${STATUS_PROJECTZOMBOID_EXPECTED_ONLINE:true}
+      expected-online: ${STATUS_PROJECTZOMBOID_EXPECTED_ONLINE:false}
     - id: minecraft
       name: Minecraft
       game: minecraft

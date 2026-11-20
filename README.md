@@ -127,9 +127,9 @@ real outage from a server that is intentionally off:
 - `expected-online: false` and offline is shown as **idle** (intentionally off):
   a calm "not running" note, no error, and no effect on the favicon.
 
-TeamSpeak defaults to `true`; Minecraft, Palworld and Enshrouded default to
-`false`. To bring one back into service, flip its flag, e.g.
-`STATUS_MINECRAFT_EXPECTED_ONLINE=true`.
+TeamSpeak defaults to `true`; Minecraft, Palworld, Enshrouded and Project Zomboid
+default to `false`. To bring one back into service, flip its flag, e.g.
+`STATUS_PROJECTZOMBOID_EXPECTED_ONLINE=true`.
 
 ## TeamSpeak WebQuery
 
